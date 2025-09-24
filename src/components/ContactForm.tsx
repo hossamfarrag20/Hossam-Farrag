@@ -93,9 +93,13 @@ const ContactForm = () => {
       );
       setSuccess(true);
       formRef.current.reset();
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("EmailJS Error:", err);
-      setError(`❌ ${err?.text || err?.message || "Something went wrong"}`);
+      const errorMessage =
+        err instanceof Error
+          ? err.message
+          : (err as { text?: string })?.text || "Something went wrong";
+      setError(`❌ ${errorMessage}`);
     } finally {
       setLoading(false);
     }
