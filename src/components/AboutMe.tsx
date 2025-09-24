@@ -248,7 +248,7 @@ const AboutMe = () => {
                   <div className="w-full h-full bg-gradient-to-br from-indigo-400 to-emerald-400 flex items-center justify-center">
                     <div className="text-white text-3xl font-bold">HF</div>
                     <Image
-                      src="/assets/about.jpg"
+                      src="/assets/About.jpg"
                       alt="Hossam Farrag"
                       fill
                       className="object-cover object-center"
