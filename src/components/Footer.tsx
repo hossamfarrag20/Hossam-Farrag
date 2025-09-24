@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useEffect, useRef, useState } from 'react';
-import { gsap } from 'gsap';
-import { Github, Linkedin, Mail, ArrowUp, Heart } from 'lucide-react';
+import { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
+import { Github, Linkedin, Mail, ArrowUp, Heart } from "lucide-react";
 
 const Footer = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -14,8 +14,8 @@ const Footer = () => {
       setShowScrollTop(window.scrollY > 500);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const Footer = () => {
         opacity: showScrollTop ? 1 : 0,
         scale: showScrollTop ? 1 : 0,
         duration: 0.3,
-        ease: "power2.out"
+        ease: "power2.out",
       });
     }
   }, [showScrollTop]);
@@ -32,29 +32,29 @@ const Footer = () => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   };
 
   const socialLinks = [
     {
-      name: 'GitHub',
+      name: "GitHub",
       icon: Github,
-      href: 'https://github.com/hossamfarrag20',
-      color: 'hover:text-gray-300'
+      href: "https://github.com/hossamfarrag20",
+      color: "hover:text-gray-300",
     },
     {
-      name: 'LinkedIn',
+      name: "LinkedIn",
       icon: Linkedin,
-      href: '#',
-      color: 'hover:text-blue-400'
+      href: "https://www.linkedin.com/in/hosamfarrag/",
+      color: "hover:text-blue-400",
     },
     {
-      name: 'Email',
+      name: "Email",
       icon: Mail,
-      href: 'mailto:hossamfarrag040@gmail.com',
-      color: 'hover:text-emerald-400'
-    }
+      href: "mailto:hossamfarrag040@gmail.com",
+      color: "hover:text-emerald-400",
+    },
   ];
 
   return (
@@ -62,10 +62,9 @@ const Footer = () => {
       <footer ref={footerRef} className="relative overflow-hidden">
         {/* Background */}
         <div className="absolute inset-0 bg-gradient-to-t from-black via-slate-900 to-slate-800"></div>
-        
+
         <div className="container mx-auto px-4 py-12 relative z-10">
           <div className="grid md:grid-cols-3 gap-8 items-center">
-            
             {/* Logo/Name */}
             <div className="text-center md:text-left">
               <h3 className="text-2xl font-bold text-white mb-2">
@@ -84,8 +83,12 @@ const Footer = () => {
                 <a
                   key={index}
                   href={link.href}
-                  target={link.href.startsWith('http') ? '_blank' : undefined}
-                  rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  target={link.href.startsWith("http") ? "_blank" : undefined}
+                  rel={
+                    link.href.startsWith("http")
+                      ? "noopener noreferrer"
+                      : undefined
+                  }
                   className={`group p-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-slate-400 ${link.color} transition-all duration-300 transform hover:scale-110 hover:bg-white/10`}
                   aria-label={link.name}
                 >
@@ -97,7 +100,9 @@ const Footer = () => {
             {/* Copyright */}
             <div className="text-center md:text-right">
               <p className="text-slate-400 text-sm flex items-center justify-center md:justify-end gap-1">
-                Made with <Heart className="w-4 h-4 text-red-400 animate-pulse" /> by Hossam
+                Made with{" "}
+                <Heart className="w-4 h-4 text-red-400 animate-pulse" /> by
+                Hossam
               </p>
               <p className="text-slate-500 text-xs mt-1">
                 © 2024 All rights reserved

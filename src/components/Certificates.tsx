@@ -218,11 +218,11 @@ const Certificates = () => {
         {/* Stats */}
         <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto">
           <div className="text-center">
-            <div className="text-3xl font-bold text-white mb-2">4+</div>
+            <div className="text-3xl font-bold text-white mb-2">9+</div>
             <div className="text-slate-400 text-sm">Certificates</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-white mb-2">2+</div>
+            <div className="text-3xl font-bold text-white mb-2">3+</div>
             <div className="text-slate-400 text-sm">Years Learning</div>
           </div>
           <div className="text-center">

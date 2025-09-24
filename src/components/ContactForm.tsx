@@ -124,7 +124,7 @@ const ContactForm = () => {
       icon: Linkedin,
       label: "LinkedIn",
       value: "Connect with me",
-      href: "#",
+      href: "https://www.linkedin.com/in/hosamfarrag/",
       color: "from-blue-600 to-blue-800",
     },
   ];

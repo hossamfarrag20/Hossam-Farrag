@@ -7,7 +7,7 @@ import ContentCreator from "@/components/ContentCreator";
 import DesignGallery from "@/components/DesignGallery";
 import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
-
+import WhatsAppIcon from "@/components/WhatsAppIcon";
 export default function Home() {
   return (
     <main className="min-h-screen">
@@ -19,6 +19,7 @@ export default function Home() {
       <ContentCreator />
       <DesignGallery />
       <ContactForm />
+      <WhatsAppIcon />
       <Footer />
     </main>
   );
