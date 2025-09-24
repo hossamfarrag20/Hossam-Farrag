@@ -86,7 +86,7 @@ const Hero = () => {
           <div ref={profileRef} className="flex justify-center lg:justify-end">
             <div className="relative group">
               <div className="absolute -inset-4 bg-gradient-to-r from-indigo-500 via-purple-500 to-emerald-500 rounded-full blur-lg opacity-75 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <div className="relative w-96 h-96 rounded-full overflow-hidden border-4 border-white/20 backdrop-blur-sm bg-white/10 shadow-2xl">
+              <div className="relative w-64 h-64 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-white/20 backdrop-blur-sm bg-white/10 shadow-2xl">
                 {/* Placeholder for profile photo */}
                 <div className="w-full h-full bg-gradient-to-br from-indigo-400 to-emerald-400 flex items-center justify-center">
                   <div className="text-white text-6xl font-bold">HF</div>

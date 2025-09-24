@@ -4,27 +4,31 @@ import { useState, useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Send, Mail, Github, Linkedin } from "lucide-react";
+import emailjs from "@emailjs/browser";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const ContactForm = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<
-    "idle" | "success" | "error"
-  >("idle");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const sectionRef = useRef<HTMLDivElement>(null);
-  const formRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
   const contactInfoRef = useRef<HTMLDivElement>(null);
+
+  // EmailJS config
+  // const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+  // const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+  // const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+  const EMAILJS_SERVICE_ID = "service_pbecabq";
+  const EMAILJS_TEMPLATE_ID = "template_9uitawu";
+  const EMAILJS_PUBLIC_KEY = "WIO9FxSC3eKDpFjEY";
+
+  // console.log("SERVICE_ID:", process.env.VITE_EMAILJS_SERVICE_ID);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Animate form and contact info
       if (formRef.current) {
         gsap.fromTo(
           formRef.current,
@@ -68,29 +72,33 @@ const ContactForm = () => {
     return () => ctx.revert();
   }, []);
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    setLoading(true);
+    setError(null);
+    setSuccess(false);
 
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitStatus("success");
-      setFormData({ name: "", email: "", message: "" });
+    if (!formRef.current) {
+      setError("❌ Form reference not found.");
+      setLoading(false);
+      return;
+    }
 
-      // Reset status after 3 seconds
-      setTimeout(() => setSubmitStatus("idle"), 3000);
-    }, 2000);
+    try {
+      await emailjs.sendForm(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        formRef.current,
+        EMAILJS_PUBLIC_KEY
+      );
+      setSuccess(true);
+      formRef.current.reset();
+    } catch (err: any) {
+      console.error("EmailJS Error:", err);
+      setError(`❌ ${err?.text || err?.message || "Something went wrong"}`);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const contactInfo = [
@@ -138,10 +146,10 @@ const ContactForm = () => {
 
         <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* Contact Form */}
-          <div ref={formRef}>
-            <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
               <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8">
-                {/* Name Input */}
+                {/* Name */}
                 <div className="space-y-2">
                   <label htmlFor="name" className="text-white font-medium">
                     Name
@@ -149,16 +157,14 @@ const ContactForm = () => {
                   <input
                     type="text"
                     id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
+                    name="user_name"
                     required
                     className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-indigo-400 focus:bg-white/10 transition-all duration-300"
                     placeholder="Your full name"
                   />
                 </div>
 
-                {/* Email Input */}
+                {/* Email */}
                 <div className="space-y-2">
                   <label htmlFor="email" className="text-white font-medium">
                     Email
@@ -166,16 +172,14 @@ const ContactForm = () => {
                   <input
                     type="email"
                     id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
+                    name="user_email"
                     required
                     className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-indigo-400 focus:bg-white/10 transition-all duration-300"
                     placeholder="your.email@example.com"
                   />
                 </div>
 
-                {/* Message Input */}
+                {/* Message */}
                 <div className="space-y-2">
                   <label htmlFor="message" className="text-white font-medium">
                     Message
@@ -183,8 +187,6 @@ const ContactForm = () => {
                   <textarea
                     id="message"
                     name="message"
-                    value={formData.message}
-                    onChange={handleInputChange}
                     required
                     rows={5}
                     className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-indigo-400 focus:bg-white/10 transition-all duration-300 resize-none"
@@ -192,13 +194,13 @@ const ContactForm = () => {
                   />
                 </div>
 
-                {/* Submit Button */}
+                {/* Button */}
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={loading}
                   className="w-full flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold hover:from-indigo-600 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105"
                 >
-                  {isSubmitting ? (
+                  {loading ? (
                     <>
                       <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                       Sending...
@@ -211,25 +213,23 @@ const ContactForm = () => {
                   )}
                 </button>
 
-                {/* Status Messages */}
-                {submitStatus === "success" && (
-                  <div className="text-center text-emerald-400 font-medium">
-                    ✅ Message sent successfully! I&apos;ll get back to you
-                    soon.
+                {/* Status */}
+                {success && (
+                  <div className="text-center text-emerald-400 font-medium mt-3">
+                    ✅ Message sent successfully!
                   </div>
                 )}
-                {submitStatus === "error" && (
-                  <div className="text-center text-red-400 font-medium">
-                    ❌ Something went wrong. Please try again.
+                {error && (
+                  <div className="text-center text-red-400 font-medium mt-3">
+                    {error}
                   </div>
                 )}
               </div>
             </form>
           </div>
 
-          {/* Contact Information */}
+          {/* Contact Info */}
           <div ref={contactInfoRef} className="space-y-8">
-            {/* Contact Cards */}
             <div className="space-y-6">
               {contactInfo.map((info, index) => (
                 <a
@@ -258,7 +258,6 @@ const ContactForm = () => {
               ))}
             </div>
 
-            {/* Additional Info */}
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
               <h3 className="text-white font-semibold mb-4">
                 Let&apos;s Build Something Amazing
