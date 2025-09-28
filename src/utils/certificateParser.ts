@@ -133,7 +133,7 @@ export function loadCertificates(): Certificate[] {
       date: "2023-07",
     },
     {
-      filename: "cer5.jpg",
+      filename: "cer10.jpg",
       title: "FreeLance",
       issuer: "Itida",
       date: "2025-07",
