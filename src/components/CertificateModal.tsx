@@ -81,63 +81,66 @@ export default function CertificateModal({
     <Dialog.Root open={isOpen} onOpenChange={onClose}>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 animate-in fade-in-0 duration-300" />
-        <Dialog.Content className="fixed left-1/2 top-1/2 z-50 w-full max-w-4xl max-h-[90vh] -translate-x-1/2 -translate-y-1/2 animate-in fade-in-0 zoom-in-95 duration-300">
+        <Dialog.Content className="fixed left-1/2 top-1/2 z-50 w-full max-w-4xl  -translate-x-1/2 -translate-y-1/2 animate-in fade-in-0 zoom-in-95 duration-300">
           <div className="relative bg-white/10 backdrop-blur-md border mx-5 lg:mx-0 border-white/20 rounded-2xl overflow-hidden shadow-2xl">
             {/* Header */}
-            <div className="flex items-center justify-between p-4 gap-3 border-b  border-white/10">
-              <div className="flex-1">
-                <h2 className="text-xl font-semibold text-white overflow-hidden">
-                  {certificate.title}
-                </h2>
-                <p className="text-slate-400 text-sm">
-                  {certificate.issuer} • {certificate.date}
-                </p>
+            <div className="flex items-center justify-between px-4 py-2 gap-3 border-b  border-white/10">
+              <div className="flex flex-col  w-full">
+                <div className="flex  justify-between w-full">
+                  <div className="flex-1 mt-3">
+                    <h2 className="md:text-xl text-sm whitespace-nowrap font-semibold text-white overflow-hidden">
+                      {certificate.title}
+                    </h2>
+                    <p className="text-slate-400 text-sm">
+                      {certificate.issuer} • {certificate.date}
+                    </p>
+                  </div>
+                  <Dialog.Close asChild>
+                    <button
+                      className="p-2 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200"
+                      aria-label="Close modal"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  </Dialog.Close>
+                </div>
+                {/* Navigation Controls */}
+                <div className="flex items-center  justify-between self-end pb-3">
+                  <div className="flex items-center gap-2  md:mx-4 whitespace-nowrap">
+                    <button
+                      onClick={() => onNavigate("prev")}
+                      disabled={!hasPrev}
+                      className={cn(
+                        "md:p-2 rounded-lg transition-all duration-200",
+                        hasPrev
+                          ? "text-white hover:bg-white/10 hover:scale-110"
+                          : "text-slate-600 cursor-not-allowed"
+                      )}
+                      aria-label="Previous certificate"
+                    >
+                      <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
+                    </button>
+
+                    <span className="text-slate-400 text-xs md:text-base md:px-2">
+                      {currentIndex + 1} / {certificates.length}
+                    </span>
+
+                    <button
+                      onClick={() => onNavigate("next")}
+                      disabled={!hasNext}
+                      className={cn(
+                        "md:p-2 rounded-lg transition-all duration-200",
+                        hasNext
+                          ? "text-white hover:bg-white/10 hover:scale-110"
+                          : "text-slate-600 cursor-not-allowed"
+                      )}
+                      aria-label="Next certificate"
+                    >
+                      <ChevronRight className="w-4 h-4 md:w-5 md:h-5" />
+                    </button>
+                  </div>
+                </div>
               </div>
-
-              {/* Navigation Controls */}
-              <div className="flex items-center gap-2 mx-2 md:mx-4 whitespace-nowrap">
-                <button
-                  onClick={() => onNavigate("prev")}
-                  disabled={!hasPrev}
-                  className={cn(
-                    "md:p-2 rounded-lg transition-all duration-200",
-                    hasPrev
-                      ? "text-white hover:bg-white/10 hover:scale-110"
-                      : "text-slate-600 cursor-not-allowed"
-                  )}
-                  aria-label="Previous certificate"
-                >
-                  <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
-                </button>
-
-                <span className="text-slate-400 text-xs md:text-base md:px-2">
-                  {currentIndex + 1} / {certificates.length}
-                </span>
-
-                <button
-                  onClick={() => onNavigate("next")}
-                  disabled={!hasNext}
-                  className={cn(
-                    "md:p-2 rounded-lg transition-all duration-200",
-                    hasNext
-                      ? "text-white hover:bg-white/10 hover:scale-110"
-                      : "text-slate-600 cursor-not-allowed"
-                  )}
-                  aria-label="Next certificate"
-                >
-                  <ChevronRight className="w-4 h-4 md:w-5 md:h-5" />
-                </button>
-              </div>
-
-              {/* Close Button */}
-              <Dialog.Close asChild>
-                <button
-                  className="p-2 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200"
-                  aria-label="Close modal"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </Dialog.Close>
             </div>
 
             {/* Image Container */}
@@ -155,8 +158,8 @@ export default function CertificateModal({
             </div>
 
             {/* Footer Actions */}
-            <div className="text-sm md:text-base flex items-center justify-between p-4 border-t border-white/10">
-              <div className="text-slate-400 text-sm">
+            <div className="text-sm md:text-base flex flex-col md:flex-row  items-center justify-between p-4 border-t border-white/10">
+              <div className="text-slate-400 mb-3 md:mb-0 text-sm">
                 Use ← → arrow keys to navigate
               </div>
 
