@@ -18,7 +18,7 @@ export default function Home() {
     // تخلي اللودينج يظهر لمدة ثانيتين
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1500);
+    }, 800);
 
     return () => clearTimeout(timer);
   }, []);
