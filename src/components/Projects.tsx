@@ -103,7 +103,7 @@ The project highlights semantic HTML and organized CSS for creating an elegant, 
   },
   {
     id: 8,
-    title: "Mealify",
+    title: "Grid",
     description: `This project is a static website built with HTML and CSS, specifically showcasing the power of CSS Grid for layout design.
                   It demonstrates how grid can organize content into a clean, responsive structure with consistent spacing and alignment, without relying on external frameworks or JavaScript.`,
     image: "/assets/pro8.png",
@@ -114,7 +114,7 @@ The project highlights semantic HTML and organized CSS for creating an elegant, 
   },
   {
     id: 9,
-    title: "Mealify",
+    title: "Recipe",
     description: `This project is built with HTML for structure and Sass (SCSS) for styling, showcasing advanced CSS features like variables, mixins, and nesting.
                   Sass is compiled into optimized CSS to enhance maintainability and scalability of the design.
                   The project demonstrates clean, modular styling without relying on JavaScript or external frameworks.`,
